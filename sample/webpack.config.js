@@ -1,4 +1,5 @@
 const path = require("path");
+const MyWebPackPlugin = require("./my-webpack-plugin");
 
 /*
  * entry : 시작점
@@ -30,5 +31,6 @@ module.exports = {
         }
       }
     ]
-  }
+  },
+  plugins: [new MyWebPackPlugin()]
 };
