@@ -10,9 +10,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "react": "16.13.1"
+    "css-loader": "4.2.0",
+    "file-loader": "6.0.0",
+    "react": "16.13.1",
+    "style-loader": "1.2.1"
   },
   "devDependencies": {
+    "url-loader": "4.1.0",
     "webpack": "4.44.1",
     "webpack-cli": "3.3.12"
   }
