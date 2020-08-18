@@ -4,6 +4,7 @@ const childProcess = require("child_process");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const apiMocker = require("connect-api-mocker");
 
 /*
  * entry : 시작점
@@ -12,7 +13,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 module.exports = {
   mode: "development",
   entry: {
-    main: "./app.js"
+    main: "./src/app.js"
   },
   output: {
     path: path.resolve("./dist"),
@@ -20,7 +21,10 @@ module.exports = {
   },
   devServer: {
     overlay: true,
-    stats: "errors-only"
+    stats: "errors-only",
+    before: app => {
+      app.use(apiMocker("/api", "mocks/api"));
+    }
   },
   module: {
     rules: [
