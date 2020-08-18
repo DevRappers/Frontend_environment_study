@@ -24,7 +24,8 @@ module.exports = {
     stats: "errors-only",
     before: app => {
       app.use(apiMocker("/api", "mocks/api"));
-    }
+    },
+    hot: true
   },
   module: {
     rules: [
