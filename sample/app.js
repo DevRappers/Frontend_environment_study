@@ -1,2 +1,1 @@
-new Promise();
-
+console.log();
