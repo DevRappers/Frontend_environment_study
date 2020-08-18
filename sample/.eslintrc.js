@@ -3,10 +3,13 @@ module.exports = {
     browser: true,
     es2020: true
   },
-  extends: "eslint:recommended",
+  extends: ["eslint:recommended", "eslint-config-prettier"],
   parserOptions: {
     ecmaVersion: 11,
     sourceType: "module"
   },
-  rules: {}
+  plugins: ["prettier"],
+  rules: {
+    "prettier/prettier": "error"
+  }
 };
