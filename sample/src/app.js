@@ -42,3 +42,5 @@ if (module.hot) {
     formEl.innerHTML = await form.render();
   });
 }
+
+console.log("aaaa");

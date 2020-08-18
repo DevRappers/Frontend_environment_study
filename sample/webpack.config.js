@@ -5,15 +5,21 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const apiMocker = require("connect-api-mocker");
+const OptimizeCSSAssertsPlugin = require("optimize-css-assets-webpack-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
+const CopyPlugin = require("copy-webpack-plugin");
+
+const mode = process.env.NODE_ENV || "development";
 
 /*
  * entry : 시작점
  * output : 저장위치
  * */
 module.exports = {
-  mode: "development",
+  mode,
   entry: {
     main: "./src/app.js"
+    // result: "./src/result.js"
   },
   output: {
     path: path.resolve("./dist"),
@@ -26,6 +32,27 @@ module.exports = {
       app.use(apiMocker("/api", "mocks/api"));
     },
     hot: true
+  },
+  optimization: {
+    minimizer:
+      mode === "production"
+        ? [
+            new OptimizeCSSAssertsPlugin(),
+            new TerserPlugin({
+              terserOptions: {
+                compress: {
+                  drop_console: true
+                }
+              }
+            })
+          ]
+        : []
+    // splitChunks: {
+    //   chunks: "all"
+    // }
+  },
+  externals: {
+    axios: "axios"
   },
   module: {
     rules: [
@@ -83,6 +110,12 @@ module.exports = {
     new CleanWebpackPlugin(),
     ...(process.env.NODE_ENV === "production"
       ? [new MiniCssExtractPlugin({ filename: "[name].css" })]
-      : [])
+      : []),
+    new CopyPlugin([
+      {
+        from: "./node_modules/axios/dist/axios.min.js",
+        to: "./axios.min.js"
+      }
+    ])
   ]
 };
